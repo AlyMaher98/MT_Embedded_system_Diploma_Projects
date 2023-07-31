@@ -1,0 +1,54 @@
+11:36:18 **** Incremental Build of configuration Debug for project Project03_FanController ****
+make all 
+'Building file: ../MCAL/adc.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"MCAL/adc.d" -MT"MCAL/adc.o" -c -o "MCAL/adc.o" "../MCAL/adc.c"
+'Finished building: ../MCAL/adc.c'
+' '
+'Building file: ../MCAL/gpio.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"MCAL/gpio.d" -MT"MCAL/gpio.o" -c -o "MCAL/gpio.o" "../MCAL/gpio.c"
+'Finished building: ../MCAL/gpio.c'
+' '
+'Building file: ../MCAL/pwm.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"MCAL/pwm.d" -MT"MCAL/pwm.o" -c -o "MCAL/pwm.o" "../MCAL/pwm.c"
+'Finished building: ../MCAL/pwm.c'
+' '
+'Building file: ../HAL/DCmotor.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"HAL/DCmotor.d" -MT"HAL/DCmotor.o" -c -o "HAL/DCmotor.o" "../HAL/DCmotor.c"
+'Finished building: ../HAL/DCmotor.c'
+' '
+'Building file: ../APP/app.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"APP/app.d" -MT"APP/app.o" -c -o "APP/app.o" "../APP/app.c"
+'Finished building: ../APP/app.c'
+' '
+'Building target: Project03_FanController.elf'
+'Invoking: AVR C Linker'
+avr-gcc -Wl,-Map,Project03_FanController.map -mmcu=atmega32 -o "Project03_FanController.elf"  ./MCAL/adc.o ./MCAL/gpio.o ./MCAL/pwm.o  ./HAL/DCmotor.o ./HAL/lcd.o ./HAL/lm35_sensor.o  ./APP/app.o   
+'Finished building target: Project03_FanController.elf'
+' '
+'Invoking: AVR Create Extended Listing'
+avr-objdump -h -S Project03_FanController.elf  >"Project03_FanController.lss"
+'Finished building: Project03_FanController.lss'
+' '
+'Invoking: Print Size'
+avr-size --format=avr --mcu=atmega32 Project03_FanController.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:    9986 bytes (30.5% Full)
+(.text + .data + .bootloader)
+
+Data:        300 bytes (14.6% Full)
+(.data + .bss + .noinit)
+
+
+'Finished building: sizedummy'
+' '
+
+11:36:19 Build Finished. 0 errors, 0 warnings. (took 1s.304ms)
+

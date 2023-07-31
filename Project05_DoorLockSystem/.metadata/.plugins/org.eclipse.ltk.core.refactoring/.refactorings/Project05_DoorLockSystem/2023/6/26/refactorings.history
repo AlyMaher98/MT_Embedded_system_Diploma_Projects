@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Project05_DoorLockSystem/HMI_MCU/MCAL/Timers.c&apos; to &apos;Timer1.c&apos;" description="Rename resource &apos;Timers.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="HMI_MCU/MCAL/Timers.c" name="Timer1.c" stamp="1687999776517" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;Project05_DoorLockSystem/HMI_MCU/MCAL/Timers.h&apos; to &apos;Timer1.h&apos;" description="Rename resource &apos;Timers.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="HMI_MCU/MCAL/Timers.h" name="Timer1.h" stamp="1687999821582" updateReferences="true"/>
+</session>

@@ -1,0 +1,63 @@
+16:27:50 **** Incremental Build of configuration Debug for project Project2_Calculator_MC1 ****
+make all 
+'Building file: ../MCAL/gpio.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"MCAL/gpio.d" -MT"MCAL/gpio.o" -c -o "MCAL/gpio.o" "../MCAL/gpio.c"
+'Finished building: ../MCAL/gpio.c'
+' '
+'Building file: ../MCAL/uart.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"MCAL/uart.d" -MT"MCAL/uart.o" -c -o "MCAL/uart.o" "../MCAL/uart.c"
+In file included from ../MCAL/uart.c:13:
+../MCAL/uart.h:31: warning: parameter names (without types) in function declaration
+'Finished building: ../MCAL/uart.c'
+' '
+'Building file: ../HAL/keypad.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"HAL/keypad.d" -MT"HAL/keypad.o" -c -o "HAL/keypad.o" "../HAL/keypad.c"
+'Finished building: ../HAL/keypad.c'
+' '
+'Building file: ../HAL/lcd.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"HAL/lcd.d" -MT"HAL/lcd.o" -c -o "HAL/lcd.o" "../HAL/lcd.c"
+In file included from ../HAL/lcd.c:13:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+../HAL/lcd.c: In function 'LCD_sendCommand':
+../HAL/lcd.c:63: warning: unused variable 'lcd_port_value'
+../HAL/lcd.c: In function 'LCD_displayCharacter':
+../HAL/lcd.c:113: warning: unused variable 'lcd_port_value'
+../HAL/lcd.c: In function 'LCD_intgerToString':
+../HAL/lcd.c:223: warning: implicit declaration of function 'itoa'
+'Finished building: ../HAL/lcd.c'
+' '
+'Building file: ../App/MC2.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"App/MC2.d" -MT"App/MC2.o" -c -o "App/MC2.o" "../App/MC2.c"
+In file included from ../App/MC2.c:15:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+'Finished building: ../App/MC2.c'
+' '
+'Building target: Project2_Calculator_MC1.elf'
+'Invoking: AVR C Linker'
+avr-gcc -Wl,-Map,Project2_Calculator_MC1.map -mmcu=atmega32 -o "Project2_Calculator_MC1.elf"  ./MCAL/gpio.o ./MCAL/uart.o  ./HAL/keypad.o ./HAL/lcd.o  ./App/MC2.o   
+'Finished building target: Project2_Calculator_MC1.elf'
+' '
+'Invoking: AVR Create Extended Listing'
+avr-objdump -h -S Project2_Calculator_MC1.elf  >"Project2_Calculator_MC1.lss"
+'Finished building: Project2_Calculator_MC1.lss'
+' '
+'Invoking: Print Size'
+avr-size --format=avr --mcu=atmega32 Project2_Calculator_MC1.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:   10538 bytes (32.2% Full)
+(.text + .data + .bootloader)
+
+Data:         36 bytes (1.8% Full)
+(.data + .bss + .noinit)
+
+
+'Finished building: sizedummy'
+' '

@@ -1,0 +1,18 @@
+/*
+ * HMI_MCU.c
+ *
+ *  Created on: Jun 28, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "HMI_MCU.h"
+int main()
+{
+
+
+while (1)
+{
+
+}
+}

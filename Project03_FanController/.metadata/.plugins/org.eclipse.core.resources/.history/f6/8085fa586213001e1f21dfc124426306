@@ -1,0 +1,13 @@
+/*
+ * pwm.h
+ *
+ *  Created on: Jun 25, 2023
+ *      Author: Aly Maher
+ */
+
+#ifndef PWM_H_
+#define PWM_H_
+
+void Timer0_Fast_PWM_Init(uint8_t speed);
+
+#endif /* MCAL_PWM_H_ */

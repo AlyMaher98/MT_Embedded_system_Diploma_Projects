@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Project03_FanController/MCAL/pwm.h&apos;" deleteContents="false" description="Delete resource &apos;Project03_FanController/MCAL/pwm.h&apos;" element1="/Project03_FanController/MCAL/pwm.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1687702361565"/>&#x0A;<refactoring comment="Delete resource &apos;Project03_FanController/MCAL/pwm.c&apos;" deleteContents="false" description="Delete resource &apos;Project03_FanController/MCAL/pwm.c&apos;" element1="/Project03_FanController/MCAL/pwm.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1687702365752"/>
+</session>

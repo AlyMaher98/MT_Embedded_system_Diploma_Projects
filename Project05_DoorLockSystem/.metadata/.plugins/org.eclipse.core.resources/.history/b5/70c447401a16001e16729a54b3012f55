@@ -1,0 +1,65 @@
+/*
+ * Timers.h
+ *
+ * Created: 10/7/2021 11:39:09 AM
+ *  Author: Aly Maher
+ */ 
+
+
+#ifndef TIMER1_H_
+#define TIMER1_H_
+
+
+/******************************************************************************
+*                               INCLUDES			                          *
+*******************************************************************************/
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include "../LIBS/std_types.h"
+#include "../LIBS/Utils.h"
+
+/******************************************************************************
+*									ENUMS	                				  *
+*******************************************************************************/
+
+typedef enum
+{
+	NO_CLK_SRC,
+	NO_PRESCALING,
+	PRESCALING_CLK8,
+	PRESCALING_CLK64,
+	PRESCALING_CLK256,
+	PRESCALING_CLK1024,
+	EXT_CLK_FALLING,
+	EXT_CLK_RISING,
+}TIMER1_CLOCK_t;
+
+typedef enum {
+	Normal_MODE,
+	COMPARE_MODE,
+	FAST_PWM_MODE
+} Timer_Mode_t;
+
+
+
+/******************************************************************************
+*									STRUCT	                				  *
+*******************************************************************************/
+
+
+typedef struct {
+	Timer_Mode_t mode;
+	uint16 initial_value;
+	uint16 compare_value; // it will be used in compare mode only.
+	TIMER1_CLOCK_t prescaler;
+} Timer_ConfigType;
+/******************************************************************************
+*									APIS				                      *
+*******************************************************************************/
+E_STATUS_t TIMER1_Init(STIMER1_CONFIG* configuartion);
+E_STATUS_t TIMER1_Stop();
+E_STATUS_t Timer_setCallBack(void(*a_ptr)(void));
+
+
+
+#endif /* TIMERS_H_ */

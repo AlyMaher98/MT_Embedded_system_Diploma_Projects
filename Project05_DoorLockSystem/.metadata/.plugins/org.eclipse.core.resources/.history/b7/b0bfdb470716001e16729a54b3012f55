@@ -1,0 +1,97 @@
+/*
+ * HMI_MCU.c
+ *
+ *  Created on: Jun 28, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "../HAL/keypad.h"
+#include "../HAL/lcd.h"
+#include "../MCAL/gpio.h"
+#include "../MCAL/uart.h"
+#include "../LIBS/Types.h"
+#include "../LIBS/Utils.h"
+#include <util/delay.h> /* For the delay functions */
+
+
+void LCD_WritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Enter Password:");
+	LCD_moveCursor(1,0);
+	_delay_ms(100);
+	}
+void LCD_ReWritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Re-Enter Pass:");
+	LCD_moveCursor(1,0);
+	_delay_ms(100);
+	}
+void LCD_Astricsprint(void)
+{
+	LCD_displayString("*");
+	_delay_ms(100);
+
+}
+
+void LCD_MainMenu(void)
+{
+	LCD_clearScreen();
+	LCD_displayString(" + : open Door");
+	_delay_ms(100);
+	LCD_moveCursor(1,0);
+	LCD_displayString(" - : change password");
+	_delay_ms(100);
+
+	}
+int main()
+{
+	LCD_init();
+	uint32_t pass_1=0;
+	uint32_t pass_2=0;
+	LCD_WritePass();
+
+while (1)
+{
+
+	for(uint8_t i=0;i<5;i++)
+	{
+		uint8_t key = keypad_read();
+		LCD_Astricsprint();
+		if (i==0)
+		{
+			pass_1=key;
+		}
+		else
+			pass_1 = (pass_1*10)+key;
+	}
+	LCD_ReWritePass();
+	for(uint8_t i=0;i<5;i++)
+	{
+		uint8_t key = keypad_read();
+		LCD_Astricsprint();
+		if (i==0)
+		{
+			pass_2=key;
+		}
+		else
+			pass_2 = (pass_2*10)+key;
+	}
+	if(pass_1==pass_2)
+	{
+		LCD_MainMenu();
+		/*   save pass
+		 * send pass by uart to MCU2
+		 */
+	}
+	else
+	{
+		LCD_WritePass();
+		pass_1=0;
+		pass_2=0;
+
+	}
+}
+}

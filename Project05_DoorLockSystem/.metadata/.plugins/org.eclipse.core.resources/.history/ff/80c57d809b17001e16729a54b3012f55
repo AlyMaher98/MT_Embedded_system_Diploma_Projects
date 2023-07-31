@@ -1,0 +1,48 @@
+/*
+ * Timers.c
+ *
+ * Created: 10/7/2021 11:39:21 AM
+ *  Author: Aly Maher
+ */ 
+
+#include "Timer1.h"
+
+/******************************************************************************
+*                               GLOBAL & EXTERN VARIABLES                     *
+*******************************************************************************/
+PTR_VoidFuncVoid_t CALLBACK_OVF;
+PTR_VoidFuncVoid_t CALLBACK_CM;
+uint8 u8_TOVNumber;
+STIMER1_CONFIG* TIMER1_Configurations;
+static volatile void(*Timer1_CallBackPtr)(void)  = NULL_PTR;
+
+/******************************************************************************
+*								 APIS IMPLEMENTATION			              *
+*******************************************************************************/
+void TIMER1_Init(STIMER1_CONFIG* configuartion)
+{
+
+}
+
+void TIMER1_Stop()
+{
+	TCCR1B |= NO_CLK_SRC;
+}
+ISR(TIMER1_COMPA_vect)
+{
+	if (Timer1_CallBackPtr != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*Timer1_CallBackPtr)(); /* another method to call the function using pointer to function g_Timer1_CallBackPtr */
+	}
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+	if (Timer1_CallBackPtr != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*Timer1_CallBackPtr)(); /* another method to call the function using pointer to function g_Timer1_CallBackPtr */
+	}
+}

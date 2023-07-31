@@ -1,0 +1,51 @@
+/*
+ * HMI_MCU.c
+ *
+ *  Created on: Jun 28, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "../HAL/keypad.h"
+#include "../HAL/lcd.h"
+#include "../MCAL/gpio.h"
+#include "../MCAL/uart.h"
+#include "../LIBS/Types.h"
+#include "../LIBS/Utils.h"
+
+void LCD_WritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Enter Password:");
+	LCD_moveCursor(1,0);
+	}
+void LCD_ReWritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Re-Enter Pass:");
+	LCD_moveCursor(1,0);
+	}
+void LCD_Astricsprint(void)
+{
+	LCD_displayString("*");
+
+}
+
+void LCD_MainMenu(void)
+{
+	LCD_clearScreen();
+	LCD_displayString(" + : open Door");
+	LCD_moveCursor(1,0);
+	LCD_displayString(" - : change password");
+
+	}
+int main()
+{
+	LCD_init();
+
+while (1)
+{
+	LCD_WritePass();
+	for(uint8_t i=1;i<5)
+}
+}

@@ -1,0 +1,281 @@
+/*
+ * HMI_MCU.c
+ *
+ *  Created on: Jun 28, 2023
+ *      Author: Aly Maher
+ */
+
+#include "HMI_MCU.h"
+
+
+int main()
+{
+	LCD_init();
+
+	/* Timer Configuration:
+	 * Timer ID --> Timer 1
+	 * Timer Mode --> CTC Mode
+	 * Initial Value --> 0
+	 * Timer_Prescaler --> FCPU/1024
+	 * Compare Value --> 7813
+	 * AS FCPU = 8MHz so F_timer = 8MHz/1024 = 128us & To force timer to produce interrupt every 1 second
+	 * SO Compare Value = 1/128us = 7813
+	 */
+	STIMER1_CONFIG config = {CTC, 0, 7813, PRESCALING_CLK1024};
+	TIMER1_Init(&config);
+	Timer_setCallBack(HMI_timerCallBack);
+
+	while (1)
+	{
+
+		LCD_WritePass();
+
+		for(uint8 i=0;i<5;i++)
+		{
+			uint32 key = keypad_read();
+			_delay_ms(2000);
+			LCD_Astricsprint();
+			_delay_ms(100);
+
+			if (i==0)
+			{
+				pass_1=key;
+			}
+			else
+				pass_1 = (pass_1*10)+key;
+		}
+		LCD_clearScreen();
+		//LCD_intgerToString(pass_1);
+		//_delay_ms(2000);
+		LCD_ReWritePass();
+		for(uint8_t i=0;i<5;i++)
+		{
+			uint32_t key = keypad_read();
+			_delay_ms(2000);
+			LCD_Astricsprint();
+			_delay_ms(100);
+			if (i==0)
+			{
+				pass_2=key;
+			}
+			else
+				pass_2 = (pass_2*10)+key;
+		}
+		if(pass_1==pass_2)
+		{
+			LCD_MainMenu();
+			key = keypad_read();
+			_delay_ms(500);
+			if(key=='+')
+			{
+				LCD_WritePass();
+				for(uint8_t i=0;i<5;i++)
+				{
+					key = keypad_read();
+					_delay_ms(500);
+					LCD_Astricsprint();
+					_delay_ms(100);
+					if (i==0)
+					{
+						pass_to_open_door=key;
+					}
+					else
+						pass_to_open_door = (pass_to_open_door*10)+key;
+				}
+				if (pass_to_open_door==pass_2)
+				{
+					LCD_Door_unlockPrint();
+					/*
+					 * rotate the motor clock-wise
+					 */
+					_delay_ms(2000);
+					LCD_Door_lockPrint();
+					_delay_ms(2000);
+					/*
+					 * rotate the motor anti-clock
+					 */
+
+				}
+				else
+				{
+					pass_to_open_door=0;
+					LCD_WritePass();
+					for(uint8_t i=0;i<5;i++)
+					{
+						key = keypad_read();
+						_delay_ms(500);
+						LCD_Astricsprint();
+						_delay_ms(100);
+						if (i==0)
+						{
+							pass_to_open_door=key;
+						}
+						else
+							pass_to_open_door = (pass_to_open_door*10)+key;
+					}
+					if (pass_to_open_door==pass_2)
+					{
+						LCD_Door_unlockPrint();
+						/*
+						 * rotate the motor
+						 */
+						_delay_ms(2000);
+						LCD_Door_lockPrint();
+						_delay_ms(2000);
+						/*
+						 * rotate the motor anti-clock
+						 */
+					}
+					else
+					{
+						pass_to_open_door=0;
+						LCD_WritePass();
+						for(uint8_t i=0;i<5;i++)
+						{
+							key = keypad_read();
+							_delay_ms(500);
+							LCD_Astricsprint();
+							_delay_ms(100);
+							if (i==0)
+							{
+								pass_to_open_door=key;
+							}
+							else
+								pass_to_open_door = (pass_to_open_door*10)+key;
+						}
+
+					}
+					if (pass_to_open_door==pass_2)
+					{
+						LCD_Door_unlockPrint();
+						/*
+						 * rotate the motor
+						 */
+						_delay_ms(2000);
+						LCD_Door_lockPrint();
+						_delay_ms(2000);
+						/*
+						 * rotate the motor anti-clock
+						 */
+					}
+					else
+					{
+						pass_to_open_door=0;
+						LCD_WritePass();
+						for(uint8_t i=0;i<5;i++)
+						{
+							key = keypad_read();
+							_delay_ms(500);
+							LCD_Astricsprint();
+							_delay_ms(100);
+							if (i==0)
+							{
+								pass_to_open_door=key;
+							}
+							else
+								pass_to_open_door = (pass_to_open_door*10)+key;
+						}
+						if (pass_to_open_door==pass_2)
+						{
+							LCD_Door_unlockPrint();
+							/*
+							 * rotate the motor
+							 */
+							_delay_ms(2000);
+							LCD_Door_lockPrint();
+							_delay_ms(2000);
+							/*
+							 * rotate the motor anti-clock
+							 */
+						}
+						else
+						{
+							/*
+							 *
+							 *Buzzer and led
+							 */
+
+						}
+					}
+				}
+			}
+			else if (key=='-')
+			{
+				LCD_WriteNewPass();
+			}
+			else
+			{
+				LCD_MainMenu();
+			}
+
+
+		}
+		else
+		{
+			LCD_WritePass();
+			pass_1=0;
+			pass_2=0;
+
+		}
+
+	}
+}
+
+void LCD_WritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Enter Password:");
+	LCD_moveCursor(1,0);
+	_delay_ms(100);
+}
+void LCD_ReWritePass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Re-Enter Pass:");
+	LCD_moveCursor(1,0);
+	_delay_ms(100);
+}
+void LCD_Astricsprint(void)
+{
+	LCD_displayString("*");
+	_delay_ms(100);
+
+}
+
+void LCD_WriteNewPass(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Enter New Pass:");
+	LCD_moveCursor(1,0);
+	_delay_ms(100);
+}
+
+void LCD_MainMenu(void)
+{
+	LCD_clearScreen();
+	LCD_displayString(" + : open Door");
+	_delay_ms(100);
+	LCD_moveCursor(1,0);
+	LCD_displayString(" - : change password");
+	_delay_ms(100);
+
+}
+
+void LCD_Door_unlockPrint(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Door is Unlocking");
+	_delay_ms(100);
+}
+
+void LCD_Door_lockPrint(void)
+{
+	LCD_clearScreen();
+	LCD_displayString("Door is Locking");
+	_delay_ms(100);
+}
+
+void HMI_timerCallBack(void)
+{
+	sec_counter++;
+}

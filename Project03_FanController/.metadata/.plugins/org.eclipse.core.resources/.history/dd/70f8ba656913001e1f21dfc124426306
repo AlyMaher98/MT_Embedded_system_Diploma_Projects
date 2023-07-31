@@ -1,0 +1,52 @@
+/*
+ * app.c
+ *
+ *  Created on: Jun 23, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "..\MCAL\gpio.h"
+#include "..\MCAL\adc.h"
+#include "..\MCAL\timers.h"
+#include "..\HAL\lcd.h"
+#include "..\HAL\lm35_sensor.h"
+#include "..\HAL\DCmotor.h"
+#include "..\LIBS\Types.h"
+#include "..\LIBS\Utils.h"
+
+int main()
+{
+	STIMER0_CONFIG config={FASTPWM,OCIE_DISABLE,TOIE_DISABLE,PRESCALING_CLK8,non_inverting};
+	TIMER0_Init(&config);
+	LCD_init();
+	DcMotor_Init();
+	ADC_init();
+	uint32_t current_temp;
+	LCD_displayStringRowColumn(0,0,"FAN IS ");
+	LCD_displayStringRowColumn(1,0,"TEMP = ");
+while(1)
+{
+	current_temp=LM35_getTemperature();
+	if(current_temp<=30)
+	{
+		DcMotor_Rotate(stop,0);
+	}
+	else if((current_temp>=30)&&(current_temp<60))
+	{
+		DcMotor_Rotate(CW,25);
+	}
+	else if ((current_temp>=60)&&(current_temp<90))
+		{
+		DcMotor_Rotate(CW,50);
+		}
+	else if ((current_temp>=90)&&(current_temp<120))
+		{
+		DcMotor_Rotate(CW,75);
+		}
+	else if ((current_temp>=120))
+		{
+		DcMotor_Rotate(CW,100);
+		}
+}
+}

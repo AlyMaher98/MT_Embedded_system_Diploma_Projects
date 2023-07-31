@@ -1,0 +1,27 @@
+16:16:37 **** Incremental Build of configuration Debug for project Project2_Calculator ****
+make all 
+'Building file: ../App/MC1.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"App/MC1.d" -MT"App/MC1.o" -c -o "App/MC1.o" "../App/MC1.c"
+In file included from ../App/MC1.c:14:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+'Finished building: ../App/MC1.c'
+' '
+'Building file: ../App/MC2.c'
+'Invoking: AVR Compiler'
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=1000000UL -MMD -MP -MF"App/MC2.d" -MT"App/MC2.o" -c -o "App/MC2.o" "../App/MC2.c"
+In file included from ../App/MC2.c:15:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+'Finished building: ../App/MC2.c'
+' '
+'Building target: Project2_Calculator.elf'
+'Invoking: AVR C Linker'
+avr-gcc -Wl,-Map,Project2_Calculator.map -mmcu=atmega32 -o "Project2_Calculator.elf"  ./MCAL/gpio.o ./MCAL/uart.o  ./HAL/keypad.o ./HAL/lcd.o  ./App/MC1.o ./App/MC2.o   
+./App/MC2.o: In function `performOperation':
+../App/MC2.c:30: multiple definition of `main'
+./App/MC1.o:../App/MC1.c:23: first defined here
+make: *** [Project2_Calculator.elf] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+
+16:16:38 Build Failed. 3 errors, 2 warnings. (took 604ms)
+

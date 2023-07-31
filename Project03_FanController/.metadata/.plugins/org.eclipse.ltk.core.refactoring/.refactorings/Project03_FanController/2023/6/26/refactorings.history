@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Project03_FanController/MCAL/Timers.c&apos; to &apos;pwm.c&apos;" description="Rename resource &apos;Timers.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MCAL/Timers.c" name="pwm.c" stamp="1687772159653" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;Project03_FanController/MCAL/Timers.h&apos; to &apos;pwm.h&apos;" description="Rename resource &apos;Timers.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MCAL/Timers.h" name="pwm.h" stamp="1687772167739" updateReferences="true"/>
+</session>

@@ -1,0 +1,15 @@
+/*
+ * app.c
+ *
+ *  Created on: Jun 23, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "..\MCAL\gpio.h"
+#include "..\MCAL\adc.h"
+#include "..\HAL\lcd.h"
+#include "..\HAL\lm35_sensor.h"
+#include "..\HAL\DCmotor.h"
+#include "..\LIBS\Types.h"
+#include "..\LIBS\Utils.h"

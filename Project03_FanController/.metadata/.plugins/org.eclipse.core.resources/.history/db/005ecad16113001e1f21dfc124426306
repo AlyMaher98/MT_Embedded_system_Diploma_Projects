@@ -1,0 +1,46 @@
+/*
+ * app.c
+ *
+ *  Created on: Jun 23, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "..\MCAL\gpio.h"
+#include "..\MCAL\adc.h"
+#include "..\HAL\lcd.h"
+#include "..\HAL\lm35_sensor.h"
+#include "..\HAL\DCmotor.h"
+#include "..\LIBS\Types.h"
+#include "..\LIBS\Utils.h"
+int main()
+{
+	LCD_init();
+	DcMotor_Init();
+	ADC_init();
+	uint32_t current_temp;
+while(1)
+{
+	current_temp=LM35_getTemperature();
+	if(current_temp<=30)
+	{
+		DcMotor_Rotate(stop,0);
+	}
+	else if(current_temp>=30)&&(current_temp<60)
+	{
+
+	}
+	else if (current_temp>=60)&&(current_temp<90)
+		{
+
+		}
+	else if (current_temp>=90)&&(current_temp<120)
+		{
+
+		}
+	else if (current_temp>=120)
+		{
+
+		}
+}
+}

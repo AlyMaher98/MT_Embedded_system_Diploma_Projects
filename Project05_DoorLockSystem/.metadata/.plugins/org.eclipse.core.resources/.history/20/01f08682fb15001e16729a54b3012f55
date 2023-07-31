@@ -1,0 +1,9 @@
+Control_MCU/MCAL/gpio.o Control_MCU/MCAL/gpio.o:  \
+ ../Control_MCU/MCAL/gpio.c ../Control_MCU/MCAL/gpio.h \
+  ../Control_MCU/MCAL/../LIBS/Types.h ../Control_MCU/MCAL/../LIBS/Utils.h
+
+../Control_MCU/MCAL/gpio.h:
+
+../Control_MCU/MCAL/../LIBS/Types.h:
+
+../Control_MCU/MCAL/../LIBS/Utils.h:

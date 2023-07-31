@@ -1,0 +1,16 @@
+/*
+ * pwm.c
+ *
+ *  Created on: Jun 25, 2023
+ *      Author: Aly Maher
+ */
+#include "pwm.h"
+
+
+
+
+Timer0_Fast_PWM_Init(uint8_t speed)
+{
+	
+
+}

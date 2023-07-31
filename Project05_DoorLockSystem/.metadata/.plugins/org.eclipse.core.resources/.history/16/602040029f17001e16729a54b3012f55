@@ -1,0 +1,105 @@
+/*
+ * Timers.c
+ *
+ * Created: 10/7/2021 11:39:21 AM
+ *  Author: Aly Maher
+ */ 
+
+#include "Timer1.h"
+#include "../MCAL/gpio.h"
+
+
+/******************************************************************************
+ *                               GLOBAL & EXTERN VARIABLES                     *
+ *******************************************************************************/
+PTR_VoidFuncVoid_t CALLBACK_OVF;
+PTR_VoidFuncVoid_t CALLBACK_CM;
+uint8 u8_TOVNumber;
+STIMER1_CONFIG* TIMER1_Configurations;
+static volatile void(*Timer1_CallBackPtr)(void)  = NULL_PTR;
+
+/******************************************************************************
+ *								 APIS IMPLEMENTATION			              *
+ *******************************************************************************/
+void TIMER1_Init(STIMER1_CONFIG* configuartion)
+{
+	/* Set the initial value of Timer1 that will start counting from it */
+	TCNT1 = configuartion->initial_value;
+	if (configuartion->mode == NORMAL)
+	{
+		/* Configure Timer1 control register TCCR1A:
+		 * 1. Normal port operation, OC1A/OC1B disconnected --> COM1A1=0 COM1A0=0
+		 * 2. Non PWM Mode --> FOC1A=1
+		 * 3. Normal Mode WGM10=0 WGM11=0 (Mode Number 0)
+		 */
+		TCCR1A = (1 << FOC1A);
+
+		/* Enable Timer/Counter1 Overflow Interrupt */
+		SET_BIT(TIMSK,TOIE1);
+	}
+	else if (configuartion->mode == CTC)
+	{
+		/* Set the Compare value dynamically according to user configurations */
+		OCR1A = configuartion->compare_value;
+
+		/* Configure Timer1 control register TCCR1A:
+		 * 1. Clear OC1A on compare match (Set output to low level) --> COM1A1=1 COM1A0=0
+		 * 2. Non PWM Mode --> FOC1A=1
+		 * 3. CTC Mode WGM10=0 WGM11=0 (Mode Number 4)
+		 */
+		TCCR1A = (1 << FOC1A) | (1 << COM1A1);
+
+		/* Configure Timer1 control register TCCR1B:
+		 * CTC Mode WGM12=1 WGM13=0 (Mode Number 4)
+		 */
+		TCCR1B |= (1 << WGM12);
+
+		/* Enable Timer1 Compare A Interrupt */
+		SET_BIT(TIMSK,OCIE1A);
+	}
+
+	else if (configuartion->mode == FAST_PWM_MODE)
+	{
+		/* Set the Compare value dynamically according to user configurations */
+		OCR1A = configuartion->compare_value;
+
+		/* Configure timer control register TCCR1A
+		 * 1. Clear OC1A on compare match (non inverting mode) COM1A1=1 COM1A0=0
+		 * 2. Disconnect OC1B  COM1B0=0 COM1B1=0
+		 * 3. PWM Mode --> FOC1A=0 FOC1B=0
+		 * 4. Fast Pwm Mode with the TOP in OCR1A WGM10=1 WGM11=1 (Mode Number 15)
+		 */
+		TCCR1A = (1 << COM1A1) | (1 << WGM10) | (1 << WGM11);
+
+		/* Configure timer control register TCCR1B
+		 * Fast Pwm Mode with the TOP in OCR1A WGM12=1 WGM13=1 (Mode Number 15)
+		 */
+		TCCR1B |= (1 << WGM12) | (1 << WGM13);
+
+		/* Set PD5/OC1A as Output pin --> pin where the PWM signal is generated from MC. */
+		GPIO_setupPinDirection(PORTD_ID, PIN5_ID, PIN_OUTPUT);
+	}
+}
+
+void TIMER1_Stop()
+{
+	TCCR1B |= NO_CLK_SRC;
+}
+ISR(TIMER1_COMPA_vect)
+{
+	if (Timer1_CallBackPtr != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*Timer1_CallBackPtr)(); /* another method to call the function using pointer to function g_Timer1_CallBackPtr */
+	}
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+	if (Timer1_CallBackPtr != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*Timer1_CallBackPtr)(); /* another method to call the function using pointer to function g_Timer1_CallBackPtr */
+	}
+}

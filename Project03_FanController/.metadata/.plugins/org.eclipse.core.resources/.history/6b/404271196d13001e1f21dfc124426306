@@ -1,0 +1,68 @@
+/*
+ * app.c
+ *
+ *  Created on: Jun 23, 2023
+ *      Author: Aly Maher
+ */
+
+
+#include "..\MCAL\gpio.h"
+#include "..\MCAL\adc.h"
+#include "..\MCAL\timers.h"
+#include "..\HAL\lcd.h"
+#include "..\HAL\lm35_sensor.h"
+#include "..\HAL\DCmotor.h"
+#include "..\LIBS\Types.h"
+#include "..\LIBS\Utils.h"
+
+int main()
+{
+	ADC_ConfigType adcConfig = { INTERNAL256, FCPU8 };
+	ADC_init(adcConfig);
+	STIMER0_CONFIG config={FASTPWM,OCIE_DISABLE,TOIE_DISABLE,PRESCALING_CLK8,non_inverting};
+	TIMER0_Init(&config);
+	LCD_init();
+	DcMotor_Init();
+	uint32_t current_temp;
+	LCD_displayStringRowColumn(0,0,"FAN IS ");
+	LCD_displayStringRowColumn(1,0,"TEMP = ");
+while(1)
+{
+	current_temp=LM35_getTemperature();
+	if(current_temp<=30)
+	{
+		LCD_displayStringRowColumn(0,8,"OFF");
+		DcMotor_Rotate(stop,0);
+		LCD_moveCursor(1,8);
+		 LCD_intgerToString(current_temp);
+	}
+	else if((current_temp>=30)&&(current_temp<60))
+	{
+		LCD_displayStringRowColumn(0,8,"ON   ");
+		DcMotor_Rotate(CW,25);
+		LCD_moveCursor(1,8);
+		 LCD_intgerToString(current_temp);
+	}
+	else if ((current_temp>=60)&&(current_temp<90))
+		{
+		LCD_displayStringRowColumn(0,8,"ON   ");
+		DcMotor_Rotate(CW,50);
+		LCD_moveCursor(1,8);
+		 LCD_intgerToString(current_temp);
+		}
+	else if ((current_temp>=90)&&(current_temp<120))
+		{
+		LCD_displayStringRowColumn(0,8,"ON    ");
+		DcMotor_Rotate(CW,75);
+		LCD_moveCursor(1,8);
+		 LCD_intgerToString(current_temp);
+		}
+	else if ((current_temp>=120))
+		{
+		LCD_displayStringRowColumn(0,8,"ON   ");
+		DcMotor_Rotate(CW,100);
+		LCD_moveCursor(1,8);
+		 LCD_intgerToString(current_temp);
+		}
+}
+}

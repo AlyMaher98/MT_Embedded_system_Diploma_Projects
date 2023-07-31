@@ -1,0 +1,61 @@
+/*
+ * Timers.c
+ *
+ * Created: 10/7/2021 11:39:21 AM
+ *  Author: Aly Maher
+ */ 
+
+#include "Timer1.h"
+
+/******************************************************************************
+*                               GLOBAL & EXTERN VARIABLES                     *
+*******************************************************************************/
+PTR_VoidFuncVoid_t CALLBACK_OVF;
+PTR_VoidFuncVoid_t CALLBACK_CM;
+uint8 u8_TOVNumber;
+STIMER1_CONFIG* TIMER1_Configurations;
+
+/******************************************************************************
+*								 APIS IMPLEMENTATION			              *
+*******************************************************************************/
+E_STATUS_t TIMER1_Init(STIMER1_CONFIG* configuartion)
+{
+	E_STATUS_t u8_Retval = E_NOK;
+	if (NULL_PTR == configuartion)
+	{
+		u8_Retval = E_NOK;
+	}
+	else
+	{
+		TIMER1_Configurations = configuartion;
+		if ((NORMAL == TIMER1_Configurations->mode) || (CTC == TIMER1_Configurations->mode))
+			|| (NORMAL == TIMER1_Configurations->mode))
+		{
+			TCCR1B |= TIMER1_Configurations->mode;
+			u8_Retval = E_OK;
+		}
+		else
+		{
+			u8_Retval = E_NOK;
+		}
+		if ((NO_CLK_SRC <= TIMER1_Configurations->clk) && (EXT_CLK_RISING >= TIMER1_Configurations->clk))
+		{
+			TCCR1B |= TIMER1_Configurations->clk;
+			u8_Retval = E_OK;
+		}
+		else
+		{
+			u8_Retval = E_NOK;
+		}
+
+	}
+	
+	return u8_Retval;
+}
+
+E_STATUS_t TIMER1_Stop()
+{
+	E_STATUS_t u8_Retval = E_NOK;
+	TCCR1B |= NO_CLK_SRC;
+	return u8_Retval;
+}
